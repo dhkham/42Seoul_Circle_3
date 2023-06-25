@@ -6,11 +6,11 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:05 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/25 17:12:07 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/25 17:13:57 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philosophers.h"
 
 void	take_forks(t_philo *p)
 {

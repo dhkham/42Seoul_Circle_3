@@ -6,23 +6,34 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/25 17:11:18 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/25 19:26:40 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "philosophers.h"
 
 // 짝 홀 구현
 // 짝수번째 철학자와 홀수번째 철학자 잘 조율해야
 // visualizer 이용하기
 
+// 질문: 아래 함수 써야함??
+// void    time_lapse(unsigned int time)
+// {
+// 	unsigned int    start_time;
+// 	start_time = get_time();
+// 	while (get_time() < start_time + (unsigned int)time)
+// 	{
+// 		usleep(50);
+// 	}
+// }
+
 int	main(int argc, char **argv)
 {
-	t_philo		*philo;
-	t_resrcs	resrcs;
-	t_args		args;
-	int			i;
-	pthread_t	tid;
+	t_philo			*philo;
+	t_resrcs		resrcs;
+	t_args			args;
+	unsigned int	i;
+	pthread_t		tid;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -33,7 +44,7 @@ int	main(int argc, char **argv)
 	init_resrcs(&resrcs, &args);
 	philo = malloc(sizeof(t_philo) * args.num_of_philo);
 	init_philo_and_run(philo, &resrcs, &args);
-	pthread_create(&tid, NULL, &monitor, philo); // monitor thread
+	pthread_create(&tid, NULL, &monitor_death, philo);
 	pthread_detach(tid);
 	i = 0;
 	while (i < args.num_of_philo)
@@ -51,7 +62,8 @@ void	*philosopher(void *args)
 	t_philo		*p;
 
 	p = (t_philo *)args;
-	while (p->resrcs->alive_stat && (!p->args.num_of_must_eat || p->eat_count < p->args.num_of_must_eat))
+	while (p->resrcs->alive_stat && \
+	(!p->args.num_of_must_eat || p->eat_count < p->args.num_of_must_eat))
 	{
 		take_forks(p);
 		eat(p);
@@ -65,11 +77,11 @@ void	*philosopher(void *args)
 	return (NULL);
 }
 
-void	*monitor(void *args)
+void	*monitor_death(void *args)
 {
-	t_philo		*p;
-	int			i;
-	long		cur_time;
+	t_philo			*p;
+	unsigned int	i;
+	long			cur_time;
 
 	p = (t_philo *)args;
 	while (1) // 무한히 반복하여 철학자들의 상태를 지속적으로 감시
@@ -92,28 +104,10 @@ void	*monitor(void *args)
 	}
 }
 
-void	destroy_resources(t_resrcs *resrcs, t_args *args)
-{
-	int	i;
-
-	i = 0;
-	while (i < args->num_of_philo)
-	{
-		pthread_mutex_destroy(&resrcs->forks[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&resrcs->last_meal_time);
-	pthread_mutex_destroy(&resrcs->full);
-	pthread_mutex_destroy(&resrcs->alive);
-	pthread_mutex_destroy(&resrcs->print_mutex);
-	free(resrcs->forks);
-	free(resrcs->forks_stat);
-}
-
 void	print_status(char *status, t_philo *p)
 {
 	pthread_mutex_lock(&p->resrcs->print_mutex); // 출력을 동기화하기 위해 뮤텍스를 잠급니다.
-	printf("%ld %d %s\n", get_time() - p->resrcs->start_time, p->id, status); // 철학자의 상태를 출력합니다.
+	printf("%lld %d %s\n", (get_time() - p->resrcs->start_time), p->id, status); // 철학자의 상태를 출력합니다. 출력되는 시간은 프로그램 시작 시간으로부터의 상대적인 시간입니다.
 	pthread_mutex_unlock(&p->resrcs->print_mutex); // 출력이 끝나면 뮤텍스를 해제합니다.
 }
 
@@ -122,5 +116,5 @@ long	get_time(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL); // 현재 시간을 가져옵니다.
-	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000)); // 현재 시간을 밀리초 단위로 반환합니다.
+	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000)); // 현재 시간을 밀리초 단위로
 }
