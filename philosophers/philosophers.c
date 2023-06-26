@@ -6,27 +6,22 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/26 21:05:14 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/26 21:49:46 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // visualizer 이용하기
+// time_lapse 함수 제대로 작동하는 것 맞는지 확인 필요
 
 int	main(int argc, char **argv)
 {
-	t_philo			*philo;
-	t_resrcs		resrcs;
-	t_args			args;
-	unsigned int	i;
-	pthread_t		tid;
+	t_philo		*philo;
+	t_resrcs	resrcs;
+	t_args		args;
+	int			i;
 
-	if (argc < 5 || argc > 6)
-	{
-		printf("wrong number of arguments\n");
-		return (1);
-	}
 	parse_arguments(argc, argv, &args);
 	init_resrcs(&resrcs, &args);
 	philo = malloc(sizeof(t_philo) * args.num_of_philo);
@@ -63,9 +58,9 @@ void	*philosopher(void *args)
 	return (NULL);
 }
 
-void	monitor_death(t_philo *p, unsigned int i)
+void	monitor_death(t_philo *p, int i)
 {
-	long cur_time;
+	long	cur_time;
 
 	pthread_mutex_lock(&p[i].resrcs->last_meal_time); // 철학자의 마지막 식사 시간에 대한 접근을 동기화하기 위해 뮤텍스를 잠급니다.
 	cur_time = get_time();
@@ -78,7 +73,7 @@ void	monitor_death(t_philo *p, unsigned int i)
 	pthread_mutex_unlock(&p[i].resrcs->last_meal_time); // 철학자의 마지막 식사 시간에 대한 뮤텍스를 해제
 }
 
-void	monitor_eating(t_philo *p, unsigned int i, unsigned int *fin_eating)
+void	monitor_eating(t_philo *p, int i, int *fin_eating)
 {
 	pthread_mutex_lock(&p[i].resrcs->full); // 철학자의 식사 상태에 대한 접근을 동기화하기 위해 뮤텍스를 잠급니다.
 	if (p[i].eat_count >= p[0].args.num_of_must_eat) // 각 철학자가 필요한 만큼 식사했는지 확인
@@ -88,8 +83,8 @@ void	monitor_eating(t_philo *p, unsigned int i, unsigned int *fin_eating)
 
 void	monitor(t_philo *p)
 {
-	unsigned int	i;
-	unsigned int	fin_eating;
+	int	i;
+	int	fin_eating;
 
 	while (1) // 철학자들의 죽음 상태와 식사 상태를 지속적으로 감시
 	{
@@ -122,9 +117,19 @@ long	get_time(void)
 	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000)); // 현재 시간을 밀리초 단위로
 }
 
+// void    time_lapse(long time)
+// {
+// 	long	start_time;
+
+// 	start_time = get_time();
+// 	while (get_time() < start_time + (long)time)
+// 	{
+// 		usleep(50);
+// 	}
+// }
 void    time_lapse(unsigned int time)
 {
-	unsigned int    start_time;
+	unsigned int	start_time;
 
 	start_time = get_time();
 	while (get_time() < start_time + (unsigned int)time)

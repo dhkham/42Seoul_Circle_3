@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/26 21:00:46 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/26 21:48:50 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ typedef struct s_resources
 
 typedef struct s_args_info
 {
-	unsigned int	num_of_philo; // number of philosophers
-	unsigned int	time_to_die; // time to die in ms
-	unsigned int	time_to_eat; // time to eat in ms
-	unsigned int	time_to_sleep; // time to sleep in ms
-	unsigned int	num_of_must_eat; // number of time each philosopher must eat
+	int	num_of_philo; // number of philosophers
+	int	time_to_die; // time to die in ms
+	int	time_to_eat; // time to eat in ms
+	int	time_to_sleep; // time to sleep in ms
+	int	num_of_must_eat; // number of time each philosopher must eat
 }	t_args;
 
 typedef struct s_philosopher
@@ -48,20 +48,20 @@ typedef struct s_philosopher
 	int				id; // philosopher id
 	int				left_fork; // fork id
 	int				right_fork; // fork id: left_fork + 1
-	unsigned int	eat_count; // how many time the philosopher ate
+	int	eat_count; // how many time the philosopher ate
 }	t_philo;
 
 void	parse_arguments(int argc, char **argv, t_args *args);
 void	init_resrcs(t_resrcs *resrcs, t_args *args);
 void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args);
-void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, unsigned int i);
+void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, int i);
 void	take_forks(t_philo *p);
 void	eat(t_philo *p);
 void	put_down_forks(t_philo *p);
 void	*philosopher(void *args);
 void	monitor(t_philo *p);
-void	monitor_death(t_philo *p, unsigned int i);
-void	monitor_eating(t_philo *p, unsigned int i, unsigned int *fin_eating);
+void	monitor_death(t_philo *p, int i);
+void	monitor_eating(t_philo *p, int i, int *fin_eating);
 void	destroy_resources(t_resrcs *resrcs, t_args *args);
 void	print_status(char *status, t_philo *p);
 long	get_time(void);

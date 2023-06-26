@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:26 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/25 19:44:55 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/26 21:41:55 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	parse_arguments(int argc, char **argv, t_args *args)
 {
+	if (argc < 5 || argc > 6)
+	{
+		printf("wrong number of arguments\n");
+		exit (1);
+	}
 	args->num_of_philo = ft_atoi(argv[1]); // 철학자의 수
 	args->time_to_die = ft_atoi(argv[2]); // 철학자가 죽을 때까지의 시간
 	args->time_to_eat = ft_atoi(argv[3]); // 철학자가 식사하는 시간
@@ -24,10 +29,7 @@ void	parse_arguments(int argc, char **argv, t_args *args)
 		args->num_of_must_eat = 0; // 주어지지 않았다면 0으로 설정
 	if (args->num_of_philo <= 0 || args->time_to_die <= 0 || \
 	args->time_to_eat <= 0 || args->time_to_sleep <= 0 || \
-	(argc == 6 && args->num_of_must_eat <= 0) || \
-	ft_strchr(argv[1], '-') || ft_strchr(argv[2], '-') || \
-	ft_strchr(argv[3], '-') || ft_strchr(argv[4], '-') || \
-	(argc == 6 && ft_strchr(argv[5], '-')))
+	(argc == 6 && args->num_of_must_eat < 0))
 	{
 		printf("Error: All arguments must be positive integers.\n");
 		exit(1);
@@ -36,7 +38,7 @@ void	parse_arguments(int argc, char **argv, t_args *args)
 
 void	init_resrcs(t_resrcs *resrcs, t_args *args)
 {
-	unsigned int	i;
+	int	i;
 
 	resrcs->forks = malloc(sizeof(pthread_mutex_t) * args->num_of_philo);
 	resrcs->forks_stat = malloc(sizeof(int) * args->num_of_philo);
@@ -58,7 +60,7 @@ void	init_resrcs(t_resrcs *resrcs, t_args *args)
 
 void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < args->num_of_philo)
@@ -70,7 +72,7 @@ void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args)
 }
 
 // 특정 철학자에 대한 정보를 초기화하는 함수
-void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, unsigned int i)
+void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, int i)
 {
 	p->resrcs = r; // 공유 자원의 주소를 철학자 구조체에 복사합니다.
 	p->args = *a; // 철학자의 인수 정보를 복사합니다.
@@ -86,7 +88,7 @@ void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, unsigned int i)
 
 void	destroy_resources(t_resrcs *resrcs, t_args *args)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < args->num_of_philo)
