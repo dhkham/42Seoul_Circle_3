@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/25 19:47:43 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/26 21:00:46 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ void	take_forks(t_philo *p);
 void	eat(t_philo *p);
 void	put_down_forks(t_philo *p);
 void	*philosopher(void *args);
-void	*monitor_death(void *args);
+void	monitor(t_philo *p);
+void	monitor_death(t_philo *p, unsigned int i);
+void	monitor_eating(t_philo *p, unsigned int i, unsigned int *fin_eating);
 void	destroy_resources(t_resrcs *resrcs, t_args *args);
 void	print_status(char *status, t_philo *p);
 long	get_time(void);
+void    time_lapse(unsigned int time);
 int		ft_atoi(const char *str);
 char	*ft_strchr(const char *s, int c);
