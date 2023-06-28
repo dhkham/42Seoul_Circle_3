@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/27 22:52:19 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 18:31:58 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*philosopher(void *args)
 
 	p = (t_philo *)args;
 	if (p->id % 2 == 0)
-		usleep(3000);
+		ft_usleep(3); //usleep(3000);//
 	while (1)
 	{
 		// 죽음 체크
@@ -61,8 +61,7 @@ void	*philosopher(void *args)
 		if (put_down_forks(p) == 1)
 			return (NULL);
 		print_status("is sleeping", p);
-		//time_lapse(p->args.time_to_sleep);
-		usleep(p->args.time_to_sleep * 1000);
+		ft_usleep(p->args.time_to_sleep); //usleep(p->args.time_to_sleep * 1000);
 		print_status("is thinking", p);
 	}
 	return (NULL);
@@ -150,23 +149,11 @@ long	get_time(void)
 	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000)); // 현재 시간을 밀리초 단위로
 }
 
-// void    time_lapse(long time)
-// {
-// 	long	start_time;
-
-// 	start_time = get_time();
-// 	while (get_time() < start_time + (long)time)
-// 	{
-// 		usleep(50);
-// 	}
-// }
-void    time_lapse(unsigned int time)
+void	ft_usleep(long long time)
 {
-	unsigned int	start_time;
+	long long	start_time;
 
 	start_time = get_time();
-	while (get_time() < start_time + (unsigned int)time)
-	{
+	while (get_time() < start_time + time)
 		usleep(50);
-	}
 }
