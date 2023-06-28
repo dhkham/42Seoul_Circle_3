@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 20:24:59 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 21:54:00 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 // ./philo 3 610 200 200
 // ./philo 4 410 200 200
 
-// time_lapse 함수 써서 쪼개기 (해결)
-// must_eat 입력되는 경우 데드락 발생
-// 전반적인 구현 방식 체크
+// must_eat 입력되는 경우 데드락 발생? (완료)
+// 철학자 1명인 경우? 예외처리 필요 (완료)
+// 데이터 레이스 fsanitize로 체크하기
 
 int	main(int argc, char **argv)
 {
@@ -64,8 +64,7 @@ void	*philosopher(void *args)
 			return (NULL);
 		print_status("is sleeping", p);
 		ft_usleep(p->args.time_to_sleep);
-		print_status("is thinking", p);
-		//ft_usleep(1);
+		print_status("is thinking", p); //ft_usleep(1); ???
 	}
 	return (NULL);
 }
@@ -117,6 +116,7 @@ int	monitor_eating(t_philo *p, int i)
 		pthread_mutex_lock(&p[i].resrcs->alive);
 		p[i].resrcs->alive_stat = 0;
 		pthread_mutex_unlock(&p[i].resrcs->alive);
+		pthread_mutex_unlock(&p[i].resrcs->full);
 		return (1);
 	}
 	pthread_mutex_unlock(&p[i].resrcs->full);

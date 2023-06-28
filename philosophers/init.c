@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:26 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 19:46:16 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 21:22:12 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,27 @@ void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args)
 	while (i < args->num_of_philo)
 	{
 		init_philosopher(&philo[i], resrcs, args, i);
+		if (args->num_of_philo == 1)
+		{
+			pthread_create(&philo[i].threads, NULL, philo_one, &philo[i]);
+			break ;
+		}
 		pthread_create(&philo[i].threads, NULL, philosopher, &philo[i]);
 		i++;
 	}
+}
+
+//philo_one
+void	*philo_one(void *args)
+{
+	t_philo		*p;
+
+	p = (t_philo *)args;
+	pthread_mutex_lock(&p->resrcs->forks[p->left_fork]);
+	print_status("has taken a fork", p);
+	p->resrcs->forks_stat[p->left_fork] = 1;
+	pthread_mutex_unlock(&p->resrcs->forks[p->left_fork]);
+	return (NULL);
 }
 
 void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, int i)

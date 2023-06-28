@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:05 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 20:22:17 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 21:53:34 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	take_forks(t_philo *p)
 	pthread_mutex_unlock(&p->resrcs->alive);
 	pthread_mutex_lock(&p->resrcs->forks[p->left_fork]);
 	print_status("has taken a fork", p);
+	p->resrcs->forks_stat[p->left_fork] = 1;
 	pthread_mutex_lock(&p->resrcs->forks[p->right_fork]);
 	print_status("has taken a fork", p);
+	p->resrcs->forks_stat[p->right_fork] = 1;
 	return (0);
 }
 
@@ -33,8 +35,8 @@ int	eat(t_philo *p)
 	pthread_mutex_lock(&p->resrcs->alive);
 	if (p->resrcs->alive_stat == 0)
 	{
-		pthread_mutex_unlock(&p->resrcs->forks[p->left_fork]);
 		pthread_mutex_unlock(&p->resrcs->forks[p->right_fork]);
+		pthread_mutex_unlock(&p->resrcs->forks[p->left_fork]);
 		pthread_mutex_unlock(&p->resrcs->alive);
 		return (1);
 	}
@@ -63,6 +65,10 @@ int	put_down_forks(t_philo *p)
 		return (1);
 	}
 	pthread_mutex_unlock(&p->resrcs->alive);
+	if (p->resrcs->forks_stat[p->left_fork] == 1)
+		p->resrcs->forks_stat[p->left_fork] = 0;
+	if (p->resrcs->forks_stat[p->right_fork] == 1)
+		p->resrcs->forks_stat[p->right_fork] = 0;
 	pthread_mutex_unlock(&p->resrcs->forks[p->right_fork]);
 	pthread_mutex_unlock(&p->resrcs->forks[p->left_fork]);
 	return (0);
