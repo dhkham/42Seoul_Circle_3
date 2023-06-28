@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:05 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 18:48:58 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 20:22:17 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	eat(t_philo *p)
 	print_status("is eating", p);
 	pthread_mutex_lock(&p->resrcs->last_meal_time);
 	p->last_meal_time = get_time();
-	ft_usleep(p->args.time_to_eat);
 	p->eat_count++;
 	pthread_mutex_unlock(&p->resrcs->last_meal_time);
+	ft_usleep(p->args.time_to_eat);
 	pthread_mutex_lock(&p->resrcs->full);
 	if (p->eat_count == p->args.num_of_must_eat)
-		p->resrcs->full_stat++;
+		p->resrcs->full_count++;
 	pthread_mutex_unlock(&p->resrcs->full);
 	return (0);
 }

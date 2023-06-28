@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:32:36 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/25 19:48:52 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 20:14:20 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,38 @@ char	*ft_strchr(const char *s, int c)
 		i++;
 	}
 	return ((char *)s + i);
+}
+
+void	print_status(char *status, t_philo *p)
+{
+	pthread_mutex_lock(&p->resrcs->alive);
+	pthread_mutex_lock(&p->resrcs->print_mutex);
+	if (!p->resrcs->alive_stat)
+	{
+		pthread_mutex_unlock(&p->resrcs->alive);
+		pthread_mutex_unlock(&p->resrcs->print_mutex);
+		return ;
+	}
+	else
+		printf("%lld %d %s\n", (get_time() - p->resrcs->start_time), \
+		p->id, status);
+	pthread_mutex_unlock(&p->resrcs->alive);
+	pthread_mutex_unlock(&p->resrcs->print_mutex);
+}
+
+long	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * (long)1000) + (tv.tv_usec / 1000));
+}
+
+void	ft_usleep(long long time)
+{
+	long long	start_time;
+
+	start_time = get_time();
+	while (get_time() < start_time + time)
+		usleep(50);
 }

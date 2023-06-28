@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:26 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 18:43:27 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 19:46:16 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_resrcs(t_resrcs *resrcs, t_args *args)
 	pthread_mutex_init(&resrcs->alive, NULL);
 	pthread_mutex_init(&resrcs->print_mutex, NULL);
 	resrcs->start_time = get_time();
-	resrcs->full_stat = 0;
+	resrcs->full_count = 0;
 	resrcs->alive_stat = 1;
 }
 
@@ -71,7 +71,6 @@ void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args)
 	}
 }
 
-// 특정 철학자에 대한 정보를 초기화하는 함수
 void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, int i)
 {
 	p->resrcs = r; // 공유 자원의 주소를 철학자 구조체에 복사합니다.
