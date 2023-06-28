@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:26 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/27 20:26:06 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 18:43:27 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	init_resrcs(t_resrcs *resrcs, t_args *args)
 	pthread_mutex_init(&resrcs->print_mutex, NULL);
 	resrcs->start_time = get_time();
 	resrcs->full_stat = 0;
-	resrcs->fin_stat = 1;
+	resrcs->alive_stat = 1;
 }
 
 void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args)

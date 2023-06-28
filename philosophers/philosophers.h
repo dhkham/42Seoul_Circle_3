@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 18:31:03 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/28 18:43:27 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_resources
 	int				*forks_stat; // for each fork: 0 = unavailable, 1 = available (int array)
 	long long		start_time; // when the program start
 	int				full_stat; // how many philosophers are full
-	int				fin_stat; // 0 = dead, 1 = alive
+	int				alive_stat; // 0 = dead, 1 = alive
 }	t_resrcs;
 
 typedef struct s_args_info
