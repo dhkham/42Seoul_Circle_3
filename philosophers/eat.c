@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:05 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 21:53:34 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/29 18:55:56 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,21 @@ int	put_down_forks(t_philo *p)
 	pthread_mutex_unlock(&p->resrcs->forks[p->right_fork]);
 	pthread_mutex_unlock(&p->resrcs->forks[p->left_fork]);
 	return (0);
+}
+
+void	print_status(char *status, t_philo *p)
+{
+	pthread_mutex_lock(&p->resrcs->alive);
+	pthread_mutex_lock(&p->resrcs->print_mutex);
+	if (!p->resrcs->alive_stat)
+	{
+		pthread_mutex_unlock(&p->resrcs->alive);
+		pthread_mutex_unlock(&p->resrcs->print_mutex);
+		return ;
+	}
+	else
+		printf("%lld %d %s\n", (get_time() - p->resrcs->start_time), \
+		p->id, status);
+	pthread_mutex_unlock(&p->resrcs->alive);
+	pthread_mutex_unlock(&p->resrcs->print_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:32:36 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 20:14:20 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/29 19:55:27 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,28 @@ char	*ft_strchr(const char *s, int c)
 	return ((char *)s + i);
 }
 
-void	print_status(char *status, t_philo *p)
+void	parse_arguments(int argc, char **argv, t_args *args)
 {
-	pthread_mutex_lock(&p->resrcs->alive);
-	pthread_mutex_lock(&p->resrcs->print_mutex);
-	if (!p->resrcs->alive_stat)
+	if (argc < 5 || argc > 6)
 	{
-		pthread_mutex_unlock(&p->resrcs->alive);
-		pthread_mutex_unlock(&p->resrcs->print_mutex);
-		return ;
+		printf("wrong number of arguments\n");
+		exit (1);
 	}
+	args->num_of_philo = ft_atoi(argv[1]);
+	args->time_to_die = ft_atoi(argv[2]);
+	args->time_to_eat = ft_atoi(argv[3]);
+	args->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		args->num_of_must_eat = ft_atoi(argv[5]);
 	else
-		printf("%lld %d %s\n", (get_time() - p->resrcs->start_time), \
-		p->id, status);
-	pthread_mutex_unlock(&p->resrcs->alive);
-	pthread_mutex_unlock(&p->resrcs->print_mutex);
+		args->num_of_must_eat = 0;
+	if (args->num_of_philo <= 0 || args->time_to_die <= 0 || \
+	args->time_to_eat <= 0 || args->time_to_sleep <= 0 || \
+	(argc == 6 && args->num_of_must_eat < 0))
+	{
+		printf("Error: All arguments must be positive integers.\n");
+		exit(1);
+	}
 }
 
 long	get_time(void)

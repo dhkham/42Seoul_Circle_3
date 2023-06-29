@@ -6,19 +6,32 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/28 21:54:00 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/29 20:00:48 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// 문제: 1, 3번이 식사 후 usleep에서 잘 빠져나오지 못해 식사 시간이 2배 소요 되고 있음 (해결)
-
 // visualizer 이용하기
-// time_lapse 함수 제대로 작동하는 것 맞는지 확인 필요
-// (검사 할 경우 sanitize지우고 하기)
-// ./philo 3 610 200 200
-// ./philo 4 410 200 200
+// 검사 할 경우 fsanitize=thread 지우고 하기
+
+/*
+test:
+
+200명 이상 철학자 금지
+60ms 미만 시간 금지
+
+// ./philo 3 610 200 200 (아무도 죽지 않아야 함)
+// ./philo 4 410 200 200 (아무도 죽지 않아야 함)
+// ./philo 1 800 200 200 (먹지 말고 죽어야 함)
+// ./philo 5 800 200 200 (아무도 죽지 않아야 함)
+// ./philo 5 800 200 200 7 (모든 철학자가 적어도 7번 먹었을 때 시뮬레이션 중지)
+// ./philo 4 310 200 100 (죽어야 함)
+ 
+- 2 명의 철학자와 테스트하고 다른 시간을 확인합니다 (10ms 이상 지연된 사망은 허용되지 않음).  
+- 모든 규칙을 확인하기 위해 값으로 테스트하십시오. 철학자가 포크를 훔치지 않으면 적시에 죽는 지 확인하십시오.
+
+*/
 
 // must_eat 입력되는 경우 데드락 발생? (완료)
 // 철학자 1명인 경우? 예외처리 필요 (완료)
@@ -53,7 +66,7 @@ void	*philosopher(void *args)
 
 	p = (t_philo *)args;
 	if (p->id % 2 == 0)
-		ft_usleep(3); // 만약 짝수번째 철학자라면, 처음에 3ms만큼 쉬어준다.
+		ft_usleep(3);
 	while (1)
 	{
 		if (take_forks(p) == 1)
@@ -64,7 +77,7 @@ void	*philosopher(void *args)
 			return (NULL);
 		print_status("is sleeping", p);
 		ft_usleep(p->args.time_to_sleep);
-		print_status("is thinking", p); //ft_usleep(1); ???
+		print_status("is thinking", p);
 	}
 	return (NULL);
 }
