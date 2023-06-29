@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/29 20:00:48 by dkham            ###   ########.fr       */
+/*   Updated: 2023/06/29 20:22:55 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	*philosopher(void *args)
 		print_status("is sleeping", p);
 		ft_usleep(p->args.time_to_sleep);
 		print_status("is thinking", p);
+		ft_usleep(1);
 	}
 	return (NULL);
 }
@@ -96,6 +97,7 @@ void	monitor(t_philo *p)
 			if (monitor_eating(p, i) == 1)
 				return ;
 			i++;
+			ft_usleep(1);
 		}
 	}
 }
