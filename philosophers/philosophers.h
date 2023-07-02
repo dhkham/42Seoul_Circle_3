@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 13:54:17 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 19:55:29 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	parse_arguments(int argc, char **argv, t_args *args);
 void	init_resrcs(t_resrcs *resrcs, t_args *args);
 void	init_philo_and_run(t_philo *philo, t_resrcs *resrcs, t_args *args);
 void	init_philosopher(t_philo *p, t_resrcs *r, t_args *a, int i);
-int		take_forks(t_philo *p);
-int		eat(t_philo *p);
+void	take_forks(t_philo *p);
+void	eat(t_philo *p);
 int		put_down_forks(t_philo *p);
 void	*philosopher(void *args);
 void	monitor(t_philo *p);

@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 11:19:44 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 20:00:56 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,14 @@ void	*philosopher(void *args)
 		ft_usleep(3);
 	while (1)
 	{
-		if (take_forks(p) == 1)
-			return (NULL);
-		if (eat(p) == 1)
-			return (NULL);
+		take_forks(p);
+		eat(p);
 		if (put_down_forks(p) == 1)
 			return (NULL);
 		print_status("is sleeping", p);
 		ft_usleep(p->args.time_to_sleep);
 		print_status("is thinking", p);
-		ft_usleep(1);
+		ft_usleep(3);
 	}
 	return (NULL);
 }
@@ -72,19 +70,16 @@ void	monitor(t_philo *p)
 			if (monitor_eating(p, i) == 1)
 				return ;
 			i++;
-			ft_usleep(1);
 		}
+		usleep(700);
 	}
 }
 
 int	monitor_death(t_philo *p, int i)
 {
-	long	cur_time;
-
 	pthread_mutex_lock(&p[i].resrcs->last_meal_time);
 	pthread_mutex_lock(&p[i].resrcs->alive);
-	cur_time = get_time();
-	if (cur_time - p[i].last_meal_time > p[i].args.time_to_die)
+	if (get_time() - p[i].last_meal_time > p[i].args.time_to_die)
 	{
 		p[i].resrcs->alive_stat = 0;
 		pthread_mutex_unlock(&p[i].resrcs->last_meal_time);
