@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:32:36 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 19:34:04 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 20:54:05 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,6 @@ int	ft_atoi(const char *str)
 	if (str[i] != '\0')
 		return (-1);
 	return (minus * result);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	return ((char *)s + i);
 }
 
 void	parse_arguments(int argc, char **argv, t_args *args)

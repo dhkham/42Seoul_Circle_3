@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 19:55:29 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 20:54:10 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	print_status(char *status, t_philo *p);
 long	get_time(void);
 void	ft_usleep(long long time);
 int		ft_atoi(const char *str);
-char	*ft_strchr(const char *s, int c);
 void	*philo_one(void *args);
 
 #endif

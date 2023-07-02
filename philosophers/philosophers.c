@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 20:00:56 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 20:35:45 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ int	monitor_death(t_philo *p, int i)
 		p[i].resrcs->alive_stat = 0;
 		pthread_mutex_unlock(&p[i].resrcs->last_meal_time);
 		pthread_mutex_unlock(&p[i].resrcs->alive);
+		pthread_mutex_lock(&p[i].resrcs->print_mutex);
 		printf("%lld %d %s\n", (get_time() - p->resrcs->start_time), \
 		p->id, "died");
+		pthread_mutex_unlock(&p[i].resrcs->print_mutex);
 		return (1);
 	}
 	pthread_mutex_unlock(&p[i].resrcs->last_meal_time);
