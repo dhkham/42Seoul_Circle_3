@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:31 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/29 18:56:38 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 13:54:17 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
 # include <sys/time.h>
 

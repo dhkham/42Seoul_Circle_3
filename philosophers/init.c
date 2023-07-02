@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:12:26 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/29 18:51:49 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 14:10:22 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_resrcs(t_resrcs *resrcs, t_args *args)
 	while (i < args->num_of_philo)
 	{
 		pthread_mutex_init(&resrcs->forks[i], NULL);
-		resrcs->forks_stat[i] = 1;
+		resrcs->forks_stat[i] = 0;
 		i++;
 	}
 	pthread_mutex_init(&resrcs->last_meal_time, NULL);

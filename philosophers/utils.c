@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:32:36 by dkham             #+#    #+#             */
-/*   Updated: 2023/06/29 20:14:03 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 13:52:43 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	ft_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
+	if (str[i] != '\0')
+		return (-1);
 	return (minus * result);
 }
 
