@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:11:15 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 20:35:45 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 21:25:16 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*philosopher(void *args)
 
 	p = (t_philo *)args;
 	if (p->id % 2 == 0)
-		ft_usleep(3);
+		usleep(3000);//ft_usleep(3);
 	while (1)
 	{
 		take_forks(p);

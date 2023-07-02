@@ -6,7 +6,7 @@
 /*   By: dkham <dkham@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:32:36 by dkham             #+#    #+#             */
-/*   Updated: 2023/07/02 20:54:05 by dkham            ###   ########.fr       */
+/*   Updated: 2023/07/02 21:16:05 by dkham            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ void	ft_usleep(long long time)
 
 	start_time = get_time();
 	while (get_time() < start_time + time)
-		usleep(1000);
+		usleep(100);
 }
